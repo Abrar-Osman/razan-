@@ -1,0 +1,485 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Happy Birthday Razan! 🎉</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;700;800&family=Luckiest+Guy&family=Nunito:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --pink: #FF4D8D;
+    --yellow: #FFC93C;
+    --sky: #4EA8DE;
+    --mint: #4ADE80;
+    --bg-deep: #0A1A4A;
+    --bg-deep2: #16307A;
+    --cream: #FFF8F0;
+  }
+
+  *{ box-sizing: border-box; }
+
+  html, body{
+    margin: 0;
+    padding: 0;
+    min-height: 100%;
+    overflow-x: hidden;
+    background: radial-gradient(ellipse at top, var(--bg-deep2) 0%, var(--bg-deep) 65%);
+    font-family: 'Nunito', sans-serif;
+    color: var(--cream);
+  }
+
+  #confetti-canvas{
+    position: fixed;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    pointer-events: none;
+    z-index: 5;
+  }
+
+  .stage{
+    position: relative;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 60px 20px 100px;
+    text-align: center;
+    z-index: 2;
+    overflow: hidden;
+  }
+
+  /* --- Floating balloons (signature element) --- */
+  .balloon-field{
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    pointer-events: none;
+  }
+
+  .balloon{
+    position: absolute;
+    bottom: -220px;
+    width: 70px;
+    height: 90px;
+    border-radius: 50% 50% 48% 48%;
+    animation: rise linear infinite;
+    opacity: 0.95;
+    filter: drop-shadow(0 6px 10px rgba(0,0,0,0.25));
+  }
+  .balloon::before{
+    content:'';
+    position: absolute;
+    top: -14px; left: 50%;
+    transform: translateX(-50%);
+    width: 16px; height: 16px;
+    border-radius: 50%;
+    background: inherit;
+    filter: brightness(1.15);
+  }
+  .balloon::after{
+    content:'';
+    position: absolute;
+    bottom: -70px; left: 50%;
+    width: 1px; height: 70px;
+    background: rgba(255,248,240,0.35);
+  }
+
+  .balloon.b1{ left: 6%;  background: var(--pink);   animation-duration: 14s; animation-delay: 0s; }
+  .balloon.b2{ left: 18%; background: var(--yellow);  animation-duration: 17s; animation-delay: 2s; width:60px; height:78px;}
+  .balloon.b3{ left: 32%; background: var(--sky);     animation-duration: 12s; animation-delay: 4s; }
+  .balloon.b4{ left: 68%; background: var(--mint);    animation-duration: 16s; animation-delay: 1s; }
+  .balloon.b5{ left: 82%; background: var(--pink);    animation-duration: 13s; animation-delay: 3s; width:64px; height:84px;}
+  .balloon.b6{ left: 92%; background: var(--yellow);  animation-duration: 19s; animation-delay: 5s; }
+  .balloon.b7{ left: 50%; background: var(--sky);     animation-duration: 15s; animation-delay: 6s; }
+
+  @keyframes rise{
+    0%   { transform: translateY(0) translateX(0) rotate(-4deg); }
+    25%  { transform: translateY(-30vh) translateX(20px) rotate(4deg); }
+    50%  { transform: translateY(-60vh) translateX(-15px) rotate(-3deg); }
+    75%  { transform: translateY(-90vh) translateX(15px) rotate(3deg); }
+    100% { transform: translateY(-130vh) translateX(0) rotate(-4deg); }
+  }
+
+  /* --- Butterflies --- */
+  .butterfly{
+    position: absolute;
+    width: 52px;
+    height: 40px;
+    animation: flutter-path linear infinite;
+  }
+  .butterfly svg{
+    width: 100%;
+    height: 100%;
+    overflow: visible;
+  }
+  .wing{
+    transform-origin: 30px 23px;
+    animation: flap 0.35s ease-in-out infinite alternate;
+  }
+
+  @keyframes flap{
+    0%{ transform: scaleX(1); }
+    100%{ transform: scaleX(0.35); }
+  }
+
+  .bf1{ top: 22%; left: -6%; animation-duration: 18s; animation-delay: 0.5s; }
+  .bf2{ top: 55%; left: -6%; animation-duration: 22s; animation-delay: 4s; }
+  .bf3{ top: 70%; left: -6%; animation-duration: 16s; animation-delay: 8s; }
+  .bf4{ top: 12%; left: -6%; animation-duration: 20s; animation-delay: 11s; }
+
+  @keyframes flutter-path{
+    0%   { transform: translate(0, 0) rotate(0deg); }
+    20%  { transform: translate(28vw, -6vh) rotate(6deg); }
+    40%  { transform: translate(55vw, 4vh) rotate(-8deg); }
+    60%  { transform: translate(75vw, -8vh) rotate(6deg); }
+    80%  { transform: translate(95vw, 2vh) rotate(-4deg); }
+    100% { transform: translate(120vw, -4vh) rotate(0deg); }
+  }
+
+  .eyebrow{
+    font-family: 'Baloo 2', sans-serif;
+    font-weight: 700;
+    letter-spacing: 0.35em;
+    text-transform: uppercase;
+    font-size: 0.85rem;
+    color: var(--yellow);
+    margin-bottom: 14px;
+  }
+
+  h1{
+    font-family: 'Luckiest Guy', 'Baloo 2', sans-serif;
+    font-weight: 400;
+    letter-spacing: 0.01em;
+    font-size: clamp(1.9rem, 11vw, 7.5rem);
+    line-height: 1;
+    margin: 0 0 6px;
+    white-space: nowrap;
+    color: #FFE9A8;
+    text-shadow:
+      0 4px 0 rgba(0,0,0,0.35),
+      0 0 18px rgba(255,201,60,0.5);
+  }
+
+  h1 .letter{
+    display: inline-block;
+    animation: wobble 2.6s ease-in-out infinite;
+  }
+
+  @keyframes wobble{
+    0%, 100%{ transform: translateY(0) rotate(0deg); }
+    50%{ transform: translateY(-8px) rotate(-3deg); }
+  }
+
+  h2{
+    font-family: 'Luckiest Guy', 'Baloo 2', sans-serif;
+    font-weight: 400;
+    letter-spacing: 0.03em;
+    font-size: clamp(1.6rem, 4.5vw, 2.5rem);
+    margin: 0 0 28px;
+    color: var(--yellow);
+    text-shadow: 0 3px 0 rgba(0,0,0,0.2);
+  }
+
+  p.message{
+    max-width: 560px;
+    font-size: clamp(1.05rem, 2.2vw, 1.25rem);
+    line-height: 1.6;
+    color: rgba(255,248,240,0.9);
+    margin: 0 0 40px;
+  }
+
+  .wish-btn{
+    font-family: 'Baloo 2', sans-serif;
+    font-weight: 700;
+    font-size: 1.15rem;
+    letter-spacing: 0.02em;
+    color: var(--bg-deep);
+    background: var(--yellow);
+    border: none;
+    padding: 16px 38px;
+    border-radius: 999px;
+    cursor: pointer;
+    box-shadow: 0 8px 0 #C9962A, 0 14px 24px rgba(0,0,0,0.35);
+    transition: transform 0.12s ease;
+  }
+  .wish-btn:active{
+    transform: translateY(6px);
+    box-shadow: 0 2px 0 #C9962A, 0 6px 14px rgba(0,0,0,0.3);
+  }
+  .wish-btn:focus-visible{
+    outline: 3px solid var(--mint);
+    outline-offset: 3px;
+  }
+
+  .footer-note{
+    margin-top: 46px;
+    font-size: 0.95rem;
+    color: rgba(255,248,240,0.55);
+  }
+
+  @media (prefers-reduced-motion: reduce){
+    .balloon, h1, .butterfly, .wing{ animation: none; }
+  }
+</style>
+</head>
+<body>
+
+<canvas id="confetti-canvas"></canvas>
+
+<div class="stage">
+  <div class="balloon-field" aria-hidden="true">
+    <div class="balloon b1"></div>
+    <div class="balloon b2"></div>
+    <div class="balloon b3"></div>
+    <div class="balloon b4"></div>
+    <div class="balloon b5"></div>
+    <div class="balloon b6"></div>
+    <div class="balloon b7"></div>
+
+    <div class="butterfly bf1" style="filter: hue-rotate(0deg);">
+      <svg viewBox="0 0 60 46">
+        <defs>
+          <linearGradient id="wg1" x1="0" y1="0" x2="1" y2="1">
+            <stop offset="0%" stop-color="#FF8AB8"/><stop offset="100%" stop-color="#FF4D8D"/>
+          </linearGradient>
+        </defs>
+        <g class="wing" fill="url(#wg1)">
+          <path d="M30 23 C 18 3, 1 3, 3 16 C 4 25, 17 27, 30 23 Z"/>
+          <path d="M30 23 C 19 27, 9 35, 14 41 C 18 45, 27 36, 30 23 Z" opacity="0.88"/>
+        </g>
+        <g class="wing" fill="url(#wg1)">
+          <path d="M30 23 C 42 3, 59 3, 57 16 C 56 25, 43 27, 30 23 Z"/>
+          <path d="M30 23 C 41 27, 51 35, 46 41 C 42 45, 33 36, 30 23 Z" opacity="0.88"/>
+        </g>
+        <circle cx="13" cy="14" r="2.6" fill="#FFF8F0" opacity="0.85"/>
+        <circle cx="47" cy="14" r="2.6" fill="#FFF8F0" opacity="0.85"/>
+        <circle cx="19" cy="35" r="1.7" fill="#FFF8F0" opacity="0.7"/>
+        <circle cx="41" cy="35" r="1.7" fill="#FFF8F0" opacity="0.7"/>
+        <ellipse cx="30" cy="23" rx="2.3" ry="12.5" fill="#241539"/>
+        <path d="M28 12 C 25 6, 21 4, 18 2" stroke="#241539" stroke-width="1" fill="none" stroke-linecap="round"/>
+        <path d="M32 12 C 35 6, 39 4, 42 2" stroke="#241539" stroke-width="1" fill="none" stroke-linecap="round"/>
+      </svg>
+    </div>
+    <div class="butterfly bf2" style="filter: hue-rotate(75deg);">
+      <svg viewBox="0 0 60 46">
+        <defs>
+          <linearGradient id="wg2" x1="0" y1="0" x2="1" y2="1">
+            <stop offset="0%" stop-color="#FFDE7A"/><stop offset="100%" stop-color="#FFC93C"/>
+          </linearGradient>
+        </defs>
+        <g class="wing" fill="url(#wg2)">
+          <path d="M30 23 C 18 3, 1 3, 3 16 C 4 25, 17 27, 30 23 Z"/>
+          <path d="M30 23 C 19 27, 9 35, 14 41 C 18 45, 27 36, 30 23 Z" opacity="0.88"/>
+        </g>
+        <g class="wing" fill="url(#wg2)">
+          <path d="M30 23 C 42 3, 59 3, 57 16 C 56 25, 43 27, 30 23 Z"/>
+          <path d="M30 23 C 41 27, 51 35, 46 41 C 42 45, 33 36, 30 23 Z" opacity="0.88"/>
+        </g>
+        <circle cx="13" cy="14" r="2.6" fill="#FFF8F0" opacity="0.85"/>
+        <circle cx="47" cy="14" r="2.6" fill="#FFF8F0" opacity="0.85"/>
+        <circle cx="19" cy="35" r="1.7" fill="#FFF8F0" opacity="0.7"/>
+        <circle cx="41" cy="35" r="1.7" fill="#FFF8F0" opacity="0.7"/>
+        <ellipse cx="30" cy="23" rx="2.3" ry="12.5" fill="#241539"/>
+        <path d="M28 12 C 25 6, 21 4, 18 2" stroke="#241539" stroke-width="1" fill="none" stroke-linecap="round"/>
+        <path d="M32 12 C 35 6, 39 4, 42 2" stroke="#241539" stroke-width="1" fill="none" stroke-linecap="round"/>
+      </svg>
+    </div>
+    <div class="butterfly bf3" style="filter: hue-rotate(150deg);">
+      <svg viewBox="0 0 60 46">
+        <defs>
+          <linearGradient id="wg3" x1="0" y1="0" x2="1" y2="1">
+            <stop offset="0%" stop-color="#7FE8A8"/><stop offset="100%" stop-color="#4ADE80"/>
+          </linearGradient>
+        </defs>
+        <g class="wing" fill="url(#wg3)">
+          <path d="M30 23 C 18 3, 1 3, 3 16 C 4 25, 17 27, 30 23 Z"/>
+          <path d="M30 23 C 19 27, 9 35, 14 41 C 18 45, 27 36, 30 23 Z" opacity="0.88"/>
+        </g>
+        <g class="wing" fill="url(#wg3)">
+          <path d="M30 23 C 42 3, 59 3, 57 16 C 56 25, 43 27, 30 23 Z"/>
+          <path d="M30 23 C 41 27, 51 35, 46 41 C 42 45, 33 36, 30 23 Z" opacity="0.88"/>
+        </g>
+        <circle cx="13" cy="14" r="2.6" fill="#FFF8F0" opacity="0.85"/>
+        <circle cx="47" cy="14" r="2.6" fill="#FFF8F0" opacity="0.85"/>
+        <circle cx="19" cy="35" r="1.7" fill="#FFF8F0" opacity="0.7"/>
+        <circle cx="41" cy="35" r="1.7" fill="#FFF8F0" opacity="0.7"/>
+        <ellipse cx="30" cy="23" rx="2.3" ry="12.5" fill="#241539"/>
+        <path d="M28 12 C 25 6, 21 4, 18 2" stroke="#241539" stroke-width="1" fill="none" stroke-linecap="round"/>
+        <path d="M32 12 C 35 6, 39 4, 42 2" stroke="#241539" stroke-width="1" fill="none" stroke-linecap="round"/>
+      </svg>
+    </div>
+    <div class="butterfly bf4" style="filter: hue-rotate(200deg);">
+      <svg viewBox="0 0 60 46">
+        <defs>
+          <linearGradient id="wg4" x1="0" y1="0" x2="1" y2="1">
+            <stop offset="0%" stop-color="#8CC9F5"/><stop offset="100%" stop-color="#4EA8DE"/>
+          </linearGradient>
+        </defs>
+        <g class="wing" fill="url(#wg4)">
+          <path d="M30 23 C 18 3, 1 3, 3 16 C 4 25, 17 27, 30 23 Z"/>
+          <path d="M30 23 C 19 27, 9 35, 14 41 C 18 45, 27 36, 30 23 Z" opacity="0.88"/>
+        </g>
+        <g class="wing" fill="url(#wg4)">
+          <path d="M30 23 C 42 3, 59 3, 57 16 C 56 25, 43 27, 30 23 Z"/>
+          <path d="M30 23 C 41 27, 51 35, 46 41 C 42 45, 33 36, 30 23 Z" opacity="0.88"/>
+        </g>
+        <circle cx="13" cy="14" r="2.6" fill="#FFF8F0" opacity="0.85"/>
+        <circle cx="47" cy="14" r="2.6" fill="#FFF8F0" opacity="0.85"/>
+        <circle cx="19" cy="35" r="1.7" fill="#FFF8F0" opacity="0.7"/>
+        <circle cx="41" cy="35" r="1.7" fill="#FFF8F0" opacity="0.7"/>
+        <ellipse cx="30" cy="23" rx="2.3" ry="12.5" fill="#241539"/>
+        <path d="M28 12 C 25 6, 21 4, 18 2" stroke="#241539" stroke-width="1" fill="none" stroke-linecap="round"/>
+        <path d="M32 12 C 35 6, 39 4, 42 2" stroke="#241539" stroke-width="1" fill="none" stroke-linecap="round"/>
+      </svg>
+    </div>
+    <div class="butterfly bf5" style="top:38%; left:-6%; animation-duration: 24s; animation-delay: 15s; filter: hue-rotate(30deg);">
+      <svg viewBox="0 0 60 46">
+        <defs>
+          <linearGradient id="wg5" x1="0" y1="0" x2="1" y2="1">
+            <stop offset="0%" stop-color="#FF8AB8"/><stop offset="100%" stop-color="#FF4D8D"/>
+          </linearGradient>
+        </defs>
+        <g class="wing" fill="url(#wg5)">
+          <path d="M30 23 C 18 3, 1 3, 3 16 C 4 25, 17 27, 30 23 Z"/>
+          <path d="M30 23 C 19 27, 9 35, 14 41 C 18 45, 27 36, 30 23 Z" opacity="0.88"/>
+        </g>
+        <g class="wing" fill="url(#wg5)">
+          <path d="M30 23 C 42 3, 59 3, 57 16 C 56 25, 43 27, 30 23 Z"/>
+          <path d="M30 23 C 41 27, 51 35, 46 41 C 42 45, 33 36, 30 23 Z" opacity="0.88"/>
+        </g>
+        <circle cx="13" cy="14" r="2.6" fill="#FFF8F0" opacity="0.85"/>
+        <circle cx="47" cy="14" r="2.6" fill="#FFF8F0" opacity="0.85"/>
+        <circle cx="19" cy="35" r="1.7" fill="#FFF8F0" opacity="0.7"/>
+        <circle cx="41" cy="35" r="1.7" fill="#FFF8F0" opacity="0.7"/>
+        <ellipse cx="30" cy="23" rx="2.3" ry="12.5" fill="#241539"/>
+        <path d="M28 12 C 25 6, 21 4, 18 2" stroke="#241539" stroke-width="1" fill="none" stroke-linecap="round"/>
+        <path d="M32 12 C 35 6, 39 4, 42 2" stroke="#241539" stroke-width="1" fill="none" stroke-linecap="round"/>
+      </svg>
+    </div>
+    <div class="butterfly bf6" style="top:65%; left:-6%; animation-duration: 21s; animation-delay: 9s; filter: hue-rotate(280deg);">
+      <svg viewBox="0 0 60 46">
+        <defs>
+          <linearGradient id="wg6" x1="0" y1="0" x2="1" y2="1">
+            <stop offset="0%" stop-color="#FFDE7A"/><stop offset="100%" stop-color="#FFC93C"/>
+          </linearGradient>
+        </defs>
+        <g class="wing" fill="url(#wg6)">
+          <path d="M30 23 C 18 3, 1 3, 3 16 C 4 25, 17 27, 30 23 Z"/>
+          <path d="M30 23 C 19 27, 9 35, 14 41 C 18 45, 27 36, 30 23 Z" opacity="0.88"/>
+        </g>
+        <g class="wing" fill="url(#wg6)">
+          <path d="M30 23 C 42 3, 59 3, 57 16 C 56 25, 43 27, 30 23 Z"/>
+          <path d="M30 23 C 41 27, 51 35, 46 41 C 42 45, 33 36, 30 23 Z" opacity="0.88"/>
+        </g>
+        <circle cx="13" cy="14" r="2.6" fill="#FFF8F0" opacity="0.85"/>
+        <circle cx="47" cy="14" r="2.6" fill="#FFF8F0" opacity="0.85"/>
+        <circle cx="19" cy="35" r="1.7" fill="#FFF8F0" opacity="0.7"/>
+        <circle cx="41" cy="35" r="1.7" fill="#FFF8F0" opacity="0.7"/>
+        <ellipse cx="30" cy="23" rx="2.3" ry="12.5" fill="#241539"/>
+        <path d="M28 12 C 25 6, 21 4, 18 2" stroke="#241539" stroke-width="1" fill="none" stroke-linecap="round"/>
+        <path d="M32 12 C 35 6, 39 4, 42 2" stroke="#241539" stroke-width="1" fill="none" stroke-linecap="round"/>
+      </svg>
+    </div>
+  </div>
+
+  <div class="eyebrow">a very special day</div>
+  <h1 id="headline"></h1>
+  <h2>Razan! 🎂✨</h2>
+  <p class="message">
+    Wishing you a day as bright and wonderful as you are.
+    May this year bring you more laughter, more adventures,
+    and every little thing you've been hoping for. 💛
+  </p>
+
+  <button class="wish-btn" id="wishBtn">🎉 Make a wish</button>
+
+  <div class="footer-note">made with love, by your only soulmate — for my little dirty soulmate 💛</div>
+</div>
+
+<script>
+  // Build wobbling headline letters
+  const headlineText = "Happy Birthday";
+  const headlineEl = document.getElementById('headline');
+  headlineText.split('').forEach((ch, i) => {
+    const span = document.createElement('span');
+    span.className = 'letter';
+    span.style.animationDelay = (i * 0.08) + 's';
+    span.textContent = ch === ' ' ? '\u00A0' : ch;
+    headlineEl.appendChild(span);
+  });
+
+  // Confetti burst
+  const canvas = document.getElementById('confetti-canvas');
+  const ctx = canvas.getContext('2d');
+  function resize(){
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+  }
+  resize();
+  window.addEventListener('resize', resize);
+
+  const colors = ['#FF4D8D', '#FFC93C', '#4EA8DE', '#4ADE80', '#FFF8F0'];
+  let particles = [];
+
+  function burst(x, y, count){
+    for(let i=0; i<count; i++){
+      particles.push({
+        x, y,
+        vx: (Math.random() - 0.5) * 10,
+        vy: (Math.random() - 1.2) * 10,
+        size: Math.random() * 7 + 4,
+        color: colors[Math.floor(Math.random() * colors.length)],
+        rotation: Math.random() * 360,
+        vr: (Math.random() - 0.5) * 12,
+        life: 0,
+        shape: Math.random() > 0.5 ? 'rect' : 'circle'
+      });
+    }
+  }
+
+  function animate(){
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    particles.forEach(p => {
+      p.vy += 0.28; // gravity
+      p.x += p.vx;
+      p.y += p.vy;
+      p.rotation += p.vr;
+      p.life++;
+
+      ctx.save();
+      ctx.translate(p.x, p.y);
+      ctx.rotate(p.rotation * Math.PI / 180);
+      ctx.fillStyle = p.color;
+      ctx.globalAlpha = Math.max(0, 1 - p.life / 130);
+      if(p.shape === 'rect'){
+        ctx.fillRect(-p.size/2, -p.size/2, p.size, p.size * 0.6);
+      } else {
+        ctx.beginPath();
+        ctx.arc(0, 0, p.size/2, 0, Math.PI*2);
+        ctx.fill();
+      }
+      ctx.restore();
+    });
+    particles = particles.filter(p => p.life < 130 && p.y < canvas.height + 50);
+    requestAnimationFrame(animate);
+  }
+  animate();
+
+  // Initial gentle burst on load
+  window.addEventListener('load', () => {
+    burst(canvas.width * 0.3, canvas.height * 0.2, 40);
+    burst(canvas.width * 0.7, canvas.height * 0.2, 40);
+  });
+
+  // Big burst on wish button
+  document.getElementById('wishBtn').addEventListener('click', (e) => {
+    const rect = e.target.getBoundingClientRect();
+    burst(rect.left + rect.width/2, rect.top, 90);
+  });
+</script>
+
+</body>
+</html>
